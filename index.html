@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#244c3e">
+<title>Khadiza's Kitchen | Made with Love</title>
+<style>
+:root {
+ --cream:#fbf8f1; --green:#244c3e; --orange:#c56840;
+ --ink:#25362d; --muted:#73796e; --line:#e5e6db;
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--cream); color:var(--ink);
+ font-family:Arial,sans-serif; line-height:1.6 }
+button,input,select,textarea { font:inherit }
+button,a { -webkit-tap-highlight-color:transparent }
+button { cursor:pointer }
+a { color:inherit; text-decoration:none }
+button:focus-visible,a:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible {
+ outline:3px solid var(--orange); outline-offset:4px
+}
+.wrap { width:min(1140px,92%); margin:auto }
+header { border-bottom:1px solid var(--line); background:#fbf8f1ee }
+nav { min-height:88px; display:flex; align-items:center;
+ justify-content:space-between; gap:20px }
+.brand { font:700 26px Georgia,serif; letter-spacing:-1px }
+.brand span { color:var(--orange) }
+.navlinks { display:flex; align-items:center; gap:26px; font-size:14px }
+.btn { border:0; border-radius:100px; padding:13px 23px;
+ background:var(--green); color:white; font-weight:600;
+ display:inline-flex; align-items:center; justify-content:center; gap:8px }
+.btn:hover { background:#35624f }
+.btn.light { background:white; color:var(--green); border:1px solid var(--line) }
+.hero { padding:72px 0; display:grid; grid-template-columns:1.1fr 1fr;
+ align-items:center; gap:60px }
+.eyebrow { color:var(--orange); font-size:12px; font-weight:700;
+ letter-spacing:2px; text-transform:uppercase }
+h1,h2,h3 { font-family:Georgia,serif; line-height:1.1 }
+h1 { font-size:clamp(44px,6vw,76px); font-weight:400;
+ margin:20px 0; letter-spacing:-2px }
+h1 em { color:var(--green) }
+.hero p { color:var(--muted); max-width:420px; margin-bottom:28px }
+.hero-art { position:relative; min-height:380px; border-radius:150px 150px 28px 28px;
+ background:#e9eddf; display:grid; place-items:center; overflow:hidden }
+.plate { width:280px; height:280px; border-radius:50%; background:#fffdf7;
+ border:16px solid #f4f0e4; box-shadow:0 22px 45px #244c3e20;
+ display:grid; place-items:center; font-size:132px; transform:rotate(-12deg) }
+.hero-note { position:absolute; bottom:22px; background:white;
+ border:1px solid var(--line); padding:10px 22px; border-radius:16px;
+ font-family:Georgia,serif; box-shadow:0 8px 20px #244c3e0b }
+.leaf { position:absolute; font-size:46px; top:30px; right:28px; transform:rotate(25deg) }
+.ribbon { border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+ padding:18px; text-align:center; color:var(--green); letter-spacing:1px; font-size:13px }
+section { padding:55px 0 }
+.section-top { display:flex; justify-content:space-between; align-items:end;
+ gap:20px; margin-bottom:26px }
+h2 { font-size:38px; font-weight:400; margin:8px 0 }
+.sub { color:var(--muted); margin:0 }
+.search { border:1px solid var(--line); border-radius:100px;
+ background:white; padding:12px 18px; width:250px; max-width:100% }
+.filters { display:flex; gap:9px; flex-wrap:wrap; margin-bottom:28px }
+.filter { border:1px solid var(--line); background:transparent;
+ color:var(--ink); padding:9px 19px; border-radius:30px }
+.filter.active { background:var(--green); color:white; border-color:var(--green) }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px }
+.card { background:white; border:1px solid var(--line);
+ border-radius:22px; overflow:hidden }
+.thumb { width:100%; height:230px; object-fit:cover; display:block; background:#edf0e7 }
+.sample-art { display:grid; place-items:center; font-size:90px }
+.card-body { padding:20px }
+.tag { color:var(--orange); font-size:11px; letter-spacing:1.3px;
+ text-transform:uppercase; font-weight:700 }
+.card h3 { margin:10px 0; font-size:25px; font-weight:400 }
+.card p { font-size:14px; color:var(--muted); margin:0 0 15px; white-space:pre-line }
+.meta { display:flex; justify-content:space-between; align-items:center;
+ gap:10px; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:12px }
+.remove { background:none; border:0; color:#a04732; font-size:12px; padding:5px }
+.empty { grid-column:1/-1; text-align:center; padding:50px; color:var(--muted) }
+.about { background:#eaf0e5; border-radius:26px; padding:40px;
+ display:grid; grid-template-columns:1fr 1.5fr; gap:40px; align-items:center }
+.about p { color:#59695b; max-width:600px }
+footer { margin-top:30px; padding:30px 0; border-top:1px solid var(--line);
+ color:var(--muted); font-size:13px }
+footer.wrap { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap }
+dialog { border:0; border-radius:24px; padding:30px; width:min(540px,92vw);
+ max-height:90vh; overflow:auto; color:var(--ink); background:var(--cream) }
+dialog::backdrop { background:#15271dcc; backdrop-filter:blur(4px) }
+.modal-head { display:flex; align-items:center; justify-content:space-between }
+.modal-head h2 { font-size:30px }
+.close { border:0; background:transparent; font-size:27px; padding:5px 10px }
+label { display:block; font-size:14px; font-weight:600; margin-top:16px }
+input:not(.search),select,textarea { width:100%; border:1px solid #d9ddcf;
+ border-radius:10px; padding:11px; background:white; color:var(--ink); margin-top:6px }
+textarea { resize:vertical }
+.hint { color:var(--muted); font-size:12px }
+form.btn { width:100%; margin-top:20px }
+#status { min-height:24px; color:var(--green); font-size:14px }
+@media(max-width:760px) {
+.navlinks a { display:none }
+.brand { font-size:23px }
+.navlinks { gap:0 }
+ nav.btn { padding:10px 15px; font-size:12px }
+.hero { grid-template-columns:1fr; padding:42px 0; gap:30px }
+.hero-art { min-height:310px }
+.plate { width:240px; height:240px; font-size:110px }
+.grid { grid-template-columns:repeat(2,1fr); gap:15px }
+.section-top { align-items:start; flex-direction:column }
+.search { width:100% }
+.about { grid-template-columns:1fr; gap:8px; padding:28px }
+}
+@media(max-width:480px) {
+.grid { grid-template-columns:1fr }
+ h2 { font-size:32px }
+}
+</style>
+</head>
+<body>
+<header>
+ <nav class="wrap" aria-label="Main navigation">
+ <a class="brand" href="#">Khadiza's<span> kitchen.</span></a>
+ <div class="navlinks">
+ <a href="#recipes">Recipes</a>
+ <a href="#about">About</a>
+ <button class="btn" id="openUpload">＋ Upload recipe</button>
+ </div>
+ </nav>
+</header>
+
+<main>
+ <div class="wrap hero">
+ <div>
+ <div class="eyebrow">A little spice. A lot of love.</div>
+ <h1>Good food.<br>Warm hearts.<br><em>My kitchen.</em></h1>
+ <p>Welcome to Khadiza’s Kitchen—a place for comforting recipes,
+ delicious discoveries, and everyday cooking inspiration.</p>
+ <a class="btn" href="#recipes">Explore the kitchen ↗</a>
+ </div>
+ <div class="hero-art" role="img" aria-label="Illustrated bowl of fresh homemade food">
+ <span class="leaf" aria-hidden="true">🌿</span>
+ <div class="plate" aria-hidden="true">🥗</div>
+ <div class="hero-note">Made with love, shared with you.</div>
+ </div>
+ </div>
+
+ <div class="ribbon">HOMEMADE GOODNESS · SIMPLE INGREDIENTS · DELICIOUS MOMENTS</div>
+
+ <section class="wrap" id="recipes">
+ <div class="section-top">
+ <div>
+ <div class="eyebrow">Fresh from the kitchen</div>
+ <h2>A little inspiration for today</h2>
+ <p class="sub">Cooking videos, recipe ideas, and delicious pictures.</p>
+ </div>
+ <input class="search" id="search" type="search"
+ placeholder="Search recipes…" aria-label="Search recipes">
+ </div>
+ <div class="filters" aria-label="Recipe categories">
+ <button class="filter active" data-filter="All" aria-pressed="true">All recipes</button>
+ <button class="filter" data-filter="Breakfast" aria-pressed="false">Breakfast</button>
+ <button class="filter" data-filter="Lunch & Dinner" aria-pressed="false">Lunch & Dinner</button>
+ <button class="filter" data-filter="Desserts" aria-pressed="false">Desserts</button>
+ <button class="filter" data-filter="Snacks" aria-pressed="false">Snacks</button>
+ </div>
+ <p id="status" role="status" aria-live="polite"></p>
+ <div class="grid" id="gallery"></div>
+ </section>
+
+ <section class="wrap" id="about">
+ <div class="about">
+ <div>
+ <div class="eyebrow">Welcome to my table</div>
+ <h2>Hi, I’m Khadiza.</h2>
+ </div>
+ <div>
+ <p>This kitchen is about bringing people together through food.
+ Find inspiration for your next meal, explore something new,
+ and make a little room for something sweet.</p>
+ <p>Pull up a chair. There’s always room for one more.</p>
+ </div>
+ </div>
+ </section>
+</main>
+
+<footer>
+ <div class="wrap">
+ <span class="brand">Khadiza's kitchen.</span>
+ <span>Made with love · <span id="year"></span></span>
+ </div>
+</footer>
+
+<dialog id="uploadDialog" aria-labelledby="uploadTitle">
+ <div class="modal-head">
+ <h2 id="uploadTitle">Fresh from your kitchen</h2>
+ <button class="close" id="closeUpload" aria-label="Close upload form">×</button>
+ </div>
+ <p class="hint">Local demo: uploads are saved only in this browser, not online.</p>
+ <form id="uploadForm">
+ <label for="title">Recipe name</label>
+ <input id="title" required maxlength="90" placeholder="e.g. Homemade chicken biryani">
+
+ <label for="category">Category</label>
+ <select id="category">
+ <option>Breakfast</option>
+ <option>Lunch & Dinner</option>
+ <option>Desserts</option>
+ <option>Snacks</option>
+ </select>
+
+ <label for="description">Recipe or description</label>
+ <textarea id="description" rows="4" maxlength="4000"
+ placeholder="Add ingredients, instructions, or the story behind your dish."></textarea>
+
+ <label for="media">Picture or cooking video</label>
+ <input id="media" type="file"
+ accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" required>
+ <p class="hint">JPG, PNG, WebP, MP4, or WebM. Maximum 50 MB per upload.</p>
+
+ <label for="minutes">Cooking time in minutes (optional)</label>
+ <input id="minutes" type="number" min="1" max="1440" placeholder="30">
+
+ <button class="btn" type="submit" id="saveButton">Save to my kitchen ↗</button>
+ <p id="uploadError" role="alert"></p>
+ </form>
+</dialog>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+const samples = [
+ { id:"sample-1", title:"Your signature breakfast",
+ category:"Breakfast", description:"Sample card — upload a photo or video of your favorite breakfast.",
+ emoji:"🥞", color:"#f5e9d6" },
+ { id:"sample-2", title:"Something comforting",
+ category:"Lunch & Dinner", description:"Sample card — share a homemade meal and the recipe behind it.",
+ emoji:"🍛", color:"#e7eddf" },
+ { id:"sample-3", title:"A little something sweet",
+ category:"Desserts", description:"Sample card — make space for your favorite homemade dessert.",
+ emoji:"🍰", color:"#f3e3df" }
+];
+
+let db, uploads = [], activeFilter = "All", objectUrls = [];
+const allowedTypes = new Set([
+ "image/jpeg", "image/png", "image/webp", "video/mp4", "video/webm"
+]);
+
+function openDatabase() {
+ return new Promise((resolve, reject) => {
+ const request = indexedDB.open("khadizas-kitchen", 1);
+ request.onupgradeneeded = () => {
+ request.result.createObjectStore("recipes", { keyPath:"id" });
+ };
+ request.onsuccess = () => resolve(request.result);
+ request.onerror = () => reject(request.error);
+ });
+}
+
+function storeAction(mode, action) {
+ return new Promise((resolve, reject) => {
+ const tx = db.transaction("recipes", mode);
+ const request = action(tx.objectStore("recipes"));
+ tx.oncomplete = () => resolve(request.result);
+ tx.onerror = () => reject(tx.error);
+ tx.onabort = () => reject(tx.error || new Error("Storage operation failed."));
+ });
+}
+
+function element(tag, className, text) {
+ const node = document.createElement(tag);
+ if (className) node.className = className;
+ if (text !== undefined) node.textContent = text;
+ return node;
+}
+
+function render() {
+ objectUrls.forEach(url => URL.revokeObjectURL(url));
+ objectUrls = [];
+ const gallery = $("gallery");
+ gallery.replaceChildren();
+ const query = $("search").value.trim().toLowerCase();
+ const items = [...uploads,...samples].filter(item =>
+ (activeFilter === "All" || item.category === activeFilter) &&
+ `${item.title} ${item.description} ${item.category}`.toLowerCase().includes(query)
+ );
+
+ if (!items.length) {
+ gallery.append(element("p", "empty", "Nothing here yet. Try another search or upload a recipe."));
+ return;
+ }
+
+ items.forEach(item => {
+ const card = element("article", "card");
+
+ if (item.file) {
+ const url = URL.createObjectURL(item.file);
+ objectUrls.push(url);
+ const isVideo = item.file.type.startsWith("video/");
+ const media = element(isVideo ? "video" : "img", "thumb");
+ media.src = url;
+ if (isVideo) {
+ media.controls = true;
+ media.preload = "metadata";
+ media.playsInline = true;
+ media.setAttribute("aria-label", item.title);
+ } else {
+ media.alt = item.title;
+ media.loading = "lazy";
+ }
+ card.append(media);
+ } else {
+ const art = element("div", "thumb sample-art", item.emoji);
+ art.style.background = item.color;
+ art.setAttribute("aria-hidden", "true");
+ card.append(art);
+ }
+
+ const body = element("div", "card-body");
+ body.append(
+ element("span", "tag", item.category),
+ element("h3", "", item.title),
+ element("p", "", item.description)
+ );
+
+ const meta = element("div", "meta");
+ meta.append(element("span", "",
+ item.file
+ ? `${item.file.type.startsWith("video/") ? "▶ Video" : "▧ Photo"}${item.minutes ? " · " + item.minutes + " min" : ""}`
+ : "Illustrative sample"
+ ));
+
+ if (item.file) {
+ const remove = element("button", "remove", "Delete");
+ remove.type = "button";
+ remove.setAttribute("aria-label", `Delete ${item.title}`);
+ remove.onclick = async () => {
+ if (!confirm(`Delete "${item.title}" from this browser?`)) return;
+ try {
+ await storeAction("readwrite", store => store.delete(item.id));
+ uploads = uploads.filter(recipe => recipe.id !== item.id);
+ render();
+ $("status").textContent = "Recipe deleted.";
+ } catch {
+ $("status").textContent = "Could not delete this recipe. Please try again.";
+ }
+ };
+ meta.append(remove);
+ }
+ body.append(meta);
+ card.append(body);
+ gallery.append(card);
+ });
+}
+
+$("openUpload").onclick = () => {
+ $("uploadError").textContent = "";
+ $("uploadDialog").showModal();
+};
+$("closeUpload").onclick = () => $("uploadDialog").close();
+$("search").addEventListener("input", render);
+
+document.querySelectorAll("[data-filter]").forEach(button => {
+ button.onclick = () => {
+ activeFilter = button.dataset.filter;
+ document.querySelectorAll("[data-filter]").forEach(other => {
+ const selected = other === button;
+ other.classList.toggle("active", selected);
+ other.setAttribute("aria-pressed", String(selected));
+ });
+ render();
+ };
+});
+
+$("uploadForm").onsubmit = async event => {
+ event.preventDefault();
+ const file = $("media").files[0];
+ const title = $("title").value.trim();
+ const error = $("uploadError");
+ error.textContent = "";
+
+ if (!db) {
+ error.textContent = "Browser storage is unavailable. Try serving this page on localhost or HTTPS.";
+ return;
+ }
+ if (!title) {
+ error.textContent = "Please enter a recipe name.";
+ return;
+ }
+ if (!file || !allowedTypes.has(file.type)) {
+ error.textContent = "Please choose a JPG, PNG, WebP, MP4, or WebM file.";
+ return;
+ }
+ if (file.size > 50 * 1024 * 1024) {
+ error.textContent = "Please choose a file smaller than 50 MB.";
+ return;
+ }
+
+ $("saveButton").disabled = true;
+ $("saveButton").textContent = "Saving…";
+
+ try {
+ const item = {
+ id:window.crypto?.randomUUID?.() ||
+ `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+ title,
+ category:$("category").value,
+ description:$("description").value.trim(),
+ minutes:$("minutes").value,
+ file,
+ createdAt:Date.now()
+ };
+ await storeAction("readwrite", store => store.add(item));
+ uploads.unshift(item);
+ $("uploadForm").reset();
+ $("search").value = "";
+ document.querySelector('[data-filter="All"]').click();
+ $("uploadDialog").close();
+ $("status").textContent = "Recipe saved in this browser. It is not published online.";
+ $("recipes").scrollIntoView({ behavior:"smooth" });
+ } catch {
+ error.textContent = "Could not save the file. Your browser storage may be full or unavailable.";
+ } finally {
+ $("saveButton").disabled = false;
+ $("saveButton").textContent = "Save to my kitchen ↗";
+ }
+};
+
+$("year").textContent = new Date().getFullYear();
+render();
+
+(async () => {
+ try {
+ db = await openDatabase();
+ uploads = await storeAction("readonly", store => store.getAll());
+ uploads.sort((a,b) => b.createdAt - a.createdAt);
+ render();
+ } catch {
+ $("status").textContent =
+ "Local storage is unavailable. You can browse the demo, but uploads cannot be saved.";
+ }
+})();
+
+window.addEventListener("pagehide", () => {
+ objectUrls.forEach(url => URL.revokeObjectURL(url));
+});
+</script>
+</body>
+</html>
